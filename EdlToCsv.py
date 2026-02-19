@@ -13,7 +13,7 @@ if __name__ == "__main__":
             # Parse out each field, render csv line to standard output
             results = re.search(r"(?:\d+\s+){2}V\s+C\s+([\d\:]+)\s[\d\:\s]+([^\|]+)\s+\|.+\|M\:(.+)\s+\|D\:(\d+)", marker)
             timecode = results.groups(0)[0]
-            notes = results.groups(0)[1].strip()
-            title = results.groups(0)[2]
+            notes = results.groups(0)[1].strip().replace(',', ';').replace('\n', '')
+            title = results.groups(0)[2].replace(',', ';')
             duration = float(results.groups(0)[3]) / 60.0
             print(f"{timecode},{duration:.2f},{title},{notes},")
