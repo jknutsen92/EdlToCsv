@@ -1,10 +1,13 @@
 from sys import argv
+from sys import exit
 import re
 from os import path
 
 if __name__ == "__main__":
     if len(argv) < 2 or not re.match(r".+\.edl$", argv[1]) or not path.exists(argv[1]):
-        raise FileNotFoundError("No valid edl file path provided")
+        print("No valid edl file path provided")
+        exit()
+        
     # Open text file
     with open(argv[1], "r") as marker_export:
         print("timecode,duration(s),title,notes,script")
