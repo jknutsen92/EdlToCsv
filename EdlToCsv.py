@@ -23,5 +23,5 @@ if __name__ == "__main__":
             timecode = results.groups(0)[0]
             notes = results.groups(0)[1].strip().replace(',', ';').replace('\n', '')
             title = results.groups(0)[2].replace(',', ';')
-            duration = float(results.groups(0)[3]) / 60.0
-            print(f"{timecode},{duration:.2f},{title},{notes},")
+            duration_seconds = float(results.groups(0)[3]) / framerate
+            print(f"{timecode},{duration_seconds:.2f},{title},{notes},")

@@ -1,12 +1,8 @@
-# https://filmlifestyle.com/timecode-film/
-# https://www.geeksforgeeks.org/python/python-datetime-timedelta-function/
-
-
 from sys import argv
 from sys import exit
-import re
 from os import path
 from datetime import timedelta
+import re
 
 def add_timecode(timecode:str, addend_seconds:float, framerate:int) -> str:
     results = re.search(r"(\d{2})\:(\d{2})\:(\d{2})\:(\d{2})", timecode)
@@ -25,7 +21,7 @@ def add_timecode(timecode:str, addend_seconds:float, framerate:int) -> str:
 
 
 if __name__ == "__main__":
-    if len(argv) < 4:
+    if len(argv) < 3:
         print("please provide input with the following format: EdlToCsv.py 'input_file_path' 60")
         exit()
 
@@ -41,8 +37,8 @@ if __name__ == "__main__":
 
     # Open new text file at destination
     with open(argv[1], 'r') as input_md:
-        for md_line in enumerate(index, input_md[2:]):      # Exclude header
-            results = re.search(r"\|([^\|\-]+)\|([^\|\-]+)\|([^\|\-]+)\|([^\|\-]+)\|([^\|\-]+)", marker)
+        for index, md_line in enumerate(input_md.readlines()[2:]):      # Exclude header
+            results = re.search(r"\|([^\|\-]+)\|([^\|\-]+)\|([^\|\-]+)\|([^\|\-]+)\|([^\|\-]+)", md_line)
             timecode_start = results.groups(0)[0].strip()
             duration_seconds = float(results.groups(0)[1].strip())
             timecode_end = add_timecode(timecode_start, duration_seconds, framerate)
