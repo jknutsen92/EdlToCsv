@@ -30,15 +30,15 @@ if __name__ == "__main__":
         exit()
     
     try:
-        framerate = int(argv[2])                                # Necessary for timecode calculations
+        framerate = int(argv[2])                                        # Necessary for timecode calculations
     except ValueError:
         print("Please enter the timeline's framerate as an integer for the second argument")
         exit()
 
     # Open new text file at destination
     with open(argv[1], 'r') as input_md:
-        for index, md_line in enumerate(input_md.readlines()[2:]):      # Exclude header
-            results = re.search(r"\|([^\|\-]+)\|([^\|\-]+)\|([^\|\-]+)\|([^\|\-]+)\|([^\|\-]+)", md_line)
+        for index, md_line in enumerate(input_md.readlines()[2:-1]):    # Exclude header and footer
+            results = re.search(r"\|([^\|]+)\|([^\|]+)\|([^\|]+)\|([^\|]+)\|([^\|]+)", md_line)
             timecode_start = results.groups(0)[0].strip()
             duration_seconds = float(results.groups(0)[1].strip())
             timecode_end = add_timecode(timecode_start, duration_seconds, framerate)
