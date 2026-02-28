@@ -35,13 +35,13 @@ if __name__ == "__main__":
         print("Please enter the timeline's framerate as an integer for the second argument")
         exit()
 
+    row_regex =  re.compile(r"\|\s((?:\d{2}\:){3}\d{2})\s\|([^\|]+)\|([^\|]+)\|([^\|]+)\|([^\|]+)")
     # Open new text file at destination
     with open(argv[1], 'r') as input_md:
-        for index, md_line in enumerate(input_md.readlines()[2:-1]):    # Exclude header and footer
-            results = re.search(r"\|([^\|]+)\|([^\|]+)\|([^\|]+)\|([^\|]+)\|([^\|]+)", md_line)
+        for index, md_line in enumerate(filter(lambda line: row_regex.match(line), input_md.readlines()), start=1):
+            results = row_regex.search(md_line)
             timecode_start = results.groups(0)[0].strip()
             duration_seconds = float(results.groups(0)[1].strip())
             timecode_end = add_timecode(timecode_start, duration_seconds, framerate)
             script = results.groups(0)[4].strip()
-            # "1","00:00:00:00","00:00:00:01","Character","Script","False"
             print(f'"{index}","{timecode_start}","{timecode_end}","","{script}", "False"')
