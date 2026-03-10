@@ -1,4 +1,5 @@
 *.edl
+.edl
 .vscode
 *.csv
 out.md

@@ -4,7 +4,7 @@ import re
 from os import path
 
 if __name__ == "__main__":
-    if len(argv) < 3 or not re.match(r".+\.edl$", argv[1]) or not path.exists(argv[1]):
+    if not re.match(r".+\.edl$", argv[1]) or not path.exists(argv[1]):
         print("No valid edl file path provided")
         exit()
     try:    
